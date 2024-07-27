@@ -1,0 +1,112 @@
+
+//Problem- A
+class Solution {
+public:
+    int minChanges(int n, int k) {
+          int setBitsN = __builtin_popcount(n);
+        int setBitsK = __builtin_popcount(k);
+        
+      
+        if (setBitsK > setBitsN) return -1;
+        
+     
+        int changes = 0;
+        
+       
+        while (n > 0 || k > 0) {
+            int bitN = n & 1; 
+            int bitK = k & 1;  
+            
+           
+            if (bitN == 1 && bitK == 0) {
+                changes++;
+            }
+            
+          
+            if (bitK == 1 && bitN == 0) {
+                return -1;
+            }
+           
+            n >>= 1;
+            k >>= 1;
+        }
+        
+        return changes;
+    }
+};
+
+
+
+//Problem -B
+
+
+class Solution {
+public:
+    bool doesAliceWin(string s) {
+        int count =0; 
+        for(int i =0; i<s.length(); i++){
+            
+            if(s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u' ){
+                count++;
+            }
+           
+        }
+        if(count!=0)return true;
+        else return false;
+    }
+};
+
+
+//Problem C
+
+class Solution {
+public:
+    int maxOperations(string s) {
+          long long one =0;
+          long long res =0;
+          for(int i=0; i<s.length(); i++){
+            if(s[i] == '1'){
+                one++;
+            } else if(i && s[i-1] == '1'){
+                res+= one;
+            }
+          }
+          return res;
+    }
+};
+
+//Problem D -
+
+class Solution {
+public:
+    long long minimumOperations(vector<int>& nums, vector<int>& target) {
+        vector<int> differences(nums.size());
+        for (size_t i = 0; i < nums.size(); ++i) {
+            differences[i] = target[i] - nums[i];
+        }
+        
+        long long totalOps = 0;
+        int prevDiff = 0;
+        size_t index = 0;
+
+        while (index < differences.size()) {
+            int currentDiff = differences[index];
+            
+            if (index == 0 || (differences[index - 1] > 0 && currentDiff > 0) || (differences[index - 1] < 0 && currentDiff < 0)) {
+                int additionalOps = abs(currentDiff) - abs(prevDiff);
+                if (additionalOps > 0) {
+                    totalOps += additionalOps;
+                }
+                prevDiff = currentDiff;
+            } else {
+                totalOps += abs(currentDiff);
+                prevDiff = currentDiff;
+            }
+            ++index;
+        }
+
+        return totalOps;
+    }
+};
+
+
